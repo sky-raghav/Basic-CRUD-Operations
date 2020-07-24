@@ -1,14 +1,17 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+require('dotenv').config();
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const rHelpers = require('./redis-helpers');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const leadsRouter = require('./routes/leads');
+const markLeadRouter =  require('./routes/markLead');
+const isFlush = false;
 
 var app = express();
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -19,8 +22,31 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//flush redis
+app.use((req,res,next) =>{
+  if(isFlush){
+    rHelpers.flushAll()
+    .then(()=>{
+      next();
+    })
+    .catch((err)=>{
+      next(err);
+    })
+  } else{
+    next();
+  }
+})
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/leads', leadsRouter);
+app.use('/api/mark_lead', markLeadRouter);
+
+
+//Response Handler
+app.use((req, res, next) => {
+  console.log('res handler res', res.data);
+  res.send(res.data || {failure: 'NO Data!'});
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
