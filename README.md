@@ -4,11 +4,6 @@ This Repository contains Basic apis for CRUD operations in a backend application
 
 PROJECT START STEPS:
 
-    Pre-requisites:
-    1. Install node, npm
-    2. Install express (npm install express --save)
-
-    Steps:
     1. To run this application, do the following:
         1.a. Go to the project root directory.
         1.b. Run the following commands respectively in the terminal/command line to build and run the app:
