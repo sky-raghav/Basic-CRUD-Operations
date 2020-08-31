@@ -1,10 +1,6 @@
-# express4.17.1-in-docker
-EXPRESS 4.17 SPA
+# Basic CRUD API for Leads Management
 
-IMPORTANT NOTES:
-
-    1. Make sure you follow the steps mentioned under "PROJECT START STEPS" and ensure that the steps execute successfully. 
-    2. Make sure you follow the steps mentioned under "DOCKER START STEPS" and ensure that the steps execute successfully. 
+This Repository contains Basic apis for CRUD operations in a backend applications using Redis as Database.
 
 PROJECT START STEPS:
 
